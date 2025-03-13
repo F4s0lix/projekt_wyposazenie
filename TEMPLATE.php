@@ -7,16 +7,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        REJESTR WYPOSAŻENIA
-    </header>
     <nav>
-        <div><a href="app/dodaj.php">dodaj</a></div>
-        <div><a href="app/edytuj.php">edytuj</a></div>
-        <div><a href="app/wypozycz.php">wypożycz</a></div>
-        <div><a href="app/wyszukaj.php">wyszukaj</a></div>
-        <div><a href="app/osoba.php">osoby</a></div>
-    </nav>
+        <header>
+            REJESTR WYPOSAŻENIA
+        </header>
+        <div>
+            <div><a href="app/dodaj.php">dodaj</a></div>
+            <div><a href="app/edytuj.php">edytuj</a></div>
+            <div><a href="app/wypozycz.php">wypożycz</a></div>
+            <div><a href="app/wyszukaj.php">wyszukaj</a></div>
+            <div><a href="app/osoba.php">osoby</a></div>
+        </div>
+    </na>
     <main>
         
     </main>
