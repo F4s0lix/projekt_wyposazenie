@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TYTUŁ</title>
+    <title>strona główna</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,7 +21,7 @@
     </nav>
     <main>
         <div>
-            <h3>ostatnio dodane</h3>
+            <h2>ostatnio dodane</h2>
             <table>
                 <tr>
                     <th>nazwa</th>
@@ -40,13 +40,30 @@
                         $miejsce = $dane['miejsce'];
                         $stan = $dane['stan'];
                         $srodek = $dane['srodek_trwaly']?'TAK':'NIE';
+                        #TODO: LINK DO PRZEDMIOTU
                         echo "<tr><td>$nazwa</td><td>$ilosc</td><td>$miejsce</td><td>$stan</td><td>$srodek</td></tr>";
                     }
                 ?>
             </table>
         </div>
         <div>
-            <h3>ostatnio wypożyczone</h3>
+            <h2>ostatnio wypożyczone</h2>
+            <table>
+                <tr>
+                    <th>email</th>
+                    <th>nazwa</th>
+                    <th>data zwrotu</th>
+                </tr>
+                <?php
+                    $wypozyczenia = $baza->ostatnie_wypozyczenia();
+                    foreach ($wypozyczenia as $k => $dane) {
+                        $email = $dane['email'];
+                        $nazwa = $dane['nazwa'];
+                        $zwrot = $dane['zwrot'];
+                        echo "<tr><td>$email</td><td>$nazwa</td><td>$zwrot</td></tr>";
+                    }
+                ?>
+            </table>
         </div>
     </main>
     <footer>

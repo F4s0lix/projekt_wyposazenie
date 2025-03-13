@@ -96,16 +96,14 @@ main{
         flex-flow: column nowrap;
         align-items: center;
     }
+    main > div > table, td, th{
+        border: 10px solid #9c3;
+    }
 }
 main > div{
     border: 2px dashed black;
     border-radius: 15px;
     margin: 2%;
-}
-
-main > div > table, td, th{
-    text-align: justify;
-    padding: 2%;
 }
 
 footer{

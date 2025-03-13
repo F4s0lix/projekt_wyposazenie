@@ -1,9 +1,12 @@
+<?php
+    if(!isset($_GET['id'])) header('Location: index.php');
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TYTUŁ</title>
+    <title>przedmiot</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,6 +23,13 @@
         </div>
     </nav>
     <main>
+        <?php
+            $id = $_GET['id'];
+            require_once 'operations/database.php';
+            $baza = new baza_operacje;
+            $dane = $baza->przemiot($id);
+            echo '<h1>ID: '.$dane['id'].' - '.$dane['nazwa'].'</h1>';
+        ?>
         
     </main>
     <footer>
