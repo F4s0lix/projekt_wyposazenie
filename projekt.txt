@@ -1,0 +1,11 @@
+REJESTR WYPOSAŻENIA
+
+FUNKCJONALNOŚCI:
+	- dodawanie nowych rzeczy
+	- edycja rzeczy
+	- wypożyczanie rzeczy
+	- wyszukiwanie rzeczy
+	- wyszukiwanie wypożyczeń
+	- inwentaryzacja
+	- dodanie nowej osoby
+	- usunięcie osoby
