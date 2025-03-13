@@ -36,9 +36,7 @@ class baza_operacje
                 $ostatnie[] = $data;
             }
         }
-        var_dump($ostatnie);
+        return $ostatnie;
     }
 }
-$test = new baza_operacje;
-$test->ostatnie_dodania();
 ?>
