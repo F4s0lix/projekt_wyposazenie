@@ -23,14 +23,25 @@
         </div>
     </nav>
     <main>
-        <?php
-            $id = $_GET['id'];
-            require_once 'operations/database.php';
-            $baza = new baza_operacje;
-            $dane = $baza->przemiot($id);
-            echo '<h1>ID: '.$dane['id'].' - '.$dane['nazwa'].'</h1>';
-        ?>
-        
+        <div>
+            <?php
+                $id = $_GET['id'];
+                require_once 'operations/database.php';
+                $baza = new baza_operacje;
+                $dane = $baza->przemiot($id);
+                echo '<span><h1>ID: '.$dane['id'].' - '.$dane['nazwa'].'</h1></span>';
+            ?>
+            <table>
+                <?php
+                    $ilosc = $dane['ilosc'];
+                    $faktura = $dane['faktura'];
+                    $miejsce = $dane['miejsce'];
+                    $stan = $dane['stan'];
+                    $srodek = $dane['srodek_trwaly'];
+                    echo "<tr><th>ilość</th><td>$ilosc</tr><tr><th>faktura</th><td>pobierz</td></tr>";
+                ?>
+            </table>
+        </div>
     </main>
     <footer>
         Stworzono przez: <a href="mailto:jan.wawrzyniak@zhp.pl"> Jan Wawrzyniak</a>

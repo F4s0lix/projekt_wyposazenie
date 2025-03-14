@@ -101,9 +101,19 @@ main{
     }
 }
 main > div{
-    border: 2px dashed black;
+    border: 2px dashed #630;
     border-radius: 15px;
     margin: 2%;
+}
+
+main > div > span{
+    border-bottom: 2px dashed #630;
+    border-collapse: collapse;
+    border-radius: 15px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    background-color: #693;
 }
 
 footer{
