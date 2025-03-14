@@ -9,7 +9,7 @@
 <body>
     <nav>
         <header>
-            REJESTR WYPOSAŻENIA
+            <a href="index.php">REJESTR WYPOSAŻENIA</a>
         </header>
         <div>
             <div><a href="app/dodaj.php">dodaj</a></div>
@@ -28,20 +28,21 @@
                     <th>ilość</th>
                     <th>miejsce</th>
                     <th>stan</th>
-                    <th>środek trwały</th>
+                    <th>karta przemiotu</th>
                 </tr>
                 <?php
                     require_once 'operations/database.php';
                     $baza = new baza_operacje;
                     $dodania = $baza->ostatnie_dodania();
                     foreach ($dodania as $k => $dane) {
+                        $id = $dane['id'];
                         $nazwa = $dane['nazwa'];
                         $ilosc = $dane['ilosc'];
                         $miejsce = $dane['miejsce'];
                         $stan = $dane['stan'];
                         $srodek = $dane['srodek_trwaly']?'TAK':'NIE';
                         #TODO: LINK DO PRZEDMIOTU
-                        echo "<tr><td>$nazwa</td><td>$ilosc</td><td>$miejsce</td><td>$stan</td><td>$srodek</td></tr>";
+                        echo "<tr><td>$nazwa</td><td>$ilosc</td><td>$miejsce</td><td>$stan</td><td><a href='karta_przedmiotu.php?id=$id'>kliknij</a></td></tr>";
                     }
                 ?>
             </table>

@@ -81,7 +81,7 @@ class baza_operacje
                 $data['faktura'] = $row['faktura'];
                 $data['miejsce'] = $row['miejsce'];
                 $data['stan'] = $row['stan'];
-                $data['srodek_trwaly'] = $row['srodek_trwaly'];
+                $data['srodek_trwaly'] = $row['srodek_trwaly']?'tak':'nie';
                 return $data;
             }
         }

@@ -9,7 +9,7 @@
 <body>
     <nav>
         <header>
-            REJESTR WYPOSAŻENIA
+            <a href="index.php">REJESTR WYPOSAŻENIA</a>
         </header>
         <div>
             <div><a href="app/dodaj.php">dodaj</a></div>
