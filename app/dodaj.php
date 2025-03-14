@@ -1,3 +1,29 @@
+<?php
+    function pokaz_wiadomosc($wiadomosc, $error)
+    {
+        #funkcja wyświetla wiadomość o błędzie
+        $klasa = $error?'error':'success';
+        echo '<div class="'.$klasa.'" id="wiadomosc">'.$wiadomosc.'</div>';
+        echo '';
+    }
+    if (isset($_POST['nazwa'], $_POST['ilosc'], $_POST['miejsce'], $_POST['stan'], $_FILES['faktura']))
+    {
+        $nazwa = htmlspecialchars($_POST['nazwa']);
+        $ilosc = htmlspecialchars($_POST['ilosc']);
+        $miejsce = htmlspecialchars($_POST['miejsce']);
+        $stan = htmlspecialchars($_POST['stan']);
+        $srodek = isset($_POST['srodek']);
+        $faktura = $_FILES['faktura'];
+        if(empty($nazwa)) pokaz_wiadomosc('błąd: pusta nazwa', true);
+        else if(empty($ilosc)) pokaz_wiadomosc('błąd: pusta ilość', true);
+        else if(empty($miejsce)) pokaz_wiadomosc('błąd: brak miejsca', true);
+        else if(empty($stan)) pokaz_wiadomosc('błąd: brak stanu', true);
+        else
+        {
+            pokaz_wiadomosc('sukces! dodano', false);
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -39,5 +65,12 @@
     <footer>
         Stworzono przez: <a href="mailto:jan.wawrzyniak@zhp.pl"> Jan Wawrzyniak</a>
     </footer>
+    <script>
+        //usuwa po 5 sekundach wiadomość
+        setInterval(function(){
+            var wiadomosc = document.getElementById('wiadomosc');
+            if(wiadomosc) wiadomosc.remove();
+        }, 5000);
+    </script>
 </body>
 </html>

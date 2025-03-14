@@ -209,3 +209,29 @@ footer > a {
 footer > a:hover{
     color: #666;
 }
+
+.error{
+    font-size: 200%;
+    font-weight: bold;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 30px;
+    padding: 3% 8% 3% 8%;
+    z-index: 1;
+    border-radius: 15px;
+    background-color: #c03;
+}
+
+.success{
+    font-size: 200%;
+    font-weight: bold;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 30px;
+    padding: 3% 8% 3% 8%;
+    z-index: 1;
+    border-radius: 15px;
+    background-color: #693;
+}
