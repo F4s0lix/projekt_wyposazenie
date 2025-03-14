@@ -114,6 +114,26 @@ main{
     }
 }
 
+form{
+    border: 2px dashed #630;
+    border-radius: 15px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+}
+
+form > *{
+    padding: 5px;
+    margin: 3px 40px 3px 40px;
+}
+
+form > input{
+    border: 2px solid #630;
+    border-radius: 15px;
+    background-color: #6cf;
+    font-weight: bold;
+}
+
 table{
     text-align: center;
 }
