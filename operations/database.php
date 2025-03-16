@@ -23,7 +23,7 @@ class baza_operacje
     {
         #funkcja zwraca listę z słownikami zawierającymi dane osatnich 7 dodanych rzeczy
         $this->otworz_polaczenie();
-        $query = 'SELECT id, nazwa, ilosc, faktura, miejsce, stan, srodek_trwaly FROM rzecz ORDER BY id DESC LIMIT 7';
+        $query = 'SELECT id, nazwa, ilosc, faktura_id, miejsce, stan, srodek_trwaly FROM rzecz ORDER BY id DESC LIMIT 7';
         $result = $this->db->query($query);
         $ostatnie = [];
         if($result->num_rows > 0)
@@ -34,7 +34,7 @@ class baza_operacje
                 $data['id'] = $row['id'];
                 $data['nazwa'] = $row['nazwa'];
                 $data['ilosc'] = $row['ilosc'];
-                $data['faktura'] = $row['faktura'];
+                $data['faktura'] = $row['faktura_id'];
                 $data['miejsce'] = $row['miejsce'];
                 $data['stan'] = $row['stan'];
                 $data['srodek_trwaly'] = $row['srodek_trwaly'];
@@ -67,7 +67,7 @@ class baza_operacje
     public function przemiot($id)
     {
         $this->otworz_polaczenie();
-        $query = 'SELECT id, nazwa, ilosc, faktura, miejsce, stan, srodek_trwaly FROM rzecz WHERE id = '.$id;
+        $query = 'SELECT id, nazwa, ilosc, faktura_id, miejsce, stan, srodek_trwaly FROM rzecz WHERE id = '.$id;
         $result = $this->db->query($query);
         $this->zamknij_polaczenie();
         if($result->num_rows > 0)
@@ -78,7 +78,7 @@ class baza_operacje
                 $data['id'] = $row['id'];
                 $data['nazwa'] = $row['nazwa'];
                 $data['ilosc'] = $row['ilosc'];
-                $data['faktura'] = $row['faktura'];
+                $data['faktura'] = $row['faktura_id'];
                 $data['miejsce'] = $row['miejsce'];
                 $data['stan'] = $row['stan'];
                 $data['srodek_trwaly'] = $row['srodek_trwaly']?'tak':'nie';
@@ -90,14 +90,29 @@ class baza_operacje
     public function dodaj_przedmiot($nazwa, $ilosc, $miejsce, $stan, $srodek, $faktura)
     {
         $this->otworz_polaczenie();
-        $fakturaDane = file_get_contents($faktura['tmp_name']);
+        if($faktura['name'] !== ''){
+            $fakturaNazwa = time().'_'.$faktura['name'];
+            $fakturaTyp = $faktura['type'];
+            $fakturaDane = file_get_contents($faktura['tmp_name']);
 
-        $stmt = $this->db->prepare('INSERT INTO rzecz (nazwa, ilosc, faktura, miejsce, stan, srodek_trwaly) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->bind_param('sisssi', $nazwa, $ilosc, $fakturaDane, $miejsce, $stan, $srodek);
-        if( $stmt->execute()){
+            $stmt_faktura = $this->db->prepare('INSERT INTO faktury (nazwa, typ, faktura_blob) VALUES (?, ?, ?)');
+            $stmt_faktura->bind_param('sss', $fakturaNazwa, $fakturaTyp, $fakturaDane);
+            if($stmt_faktura->execute()){
+             $query = 'SELECT id FROM faktury WHERE nazwa = "'.$fakturaNazwa.'"';
+                $result = $this->db->query($query);
+                $row = $result->fetch_assoc();
+                $faktura_id = $row['id'];
+            }
+        }
+        $stmt_przedmiot = $this->db->prepare('INSERT INTO rzecz (nazwa, ilosc, faktura_id, miejsce, stan, srodek_trwaly) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt_przedmiot->bind_param('siissi', $nazwa, $ilosc, $faktura_id, $miejsce, $stan, $srodek);
+        if($stmt_przedmiot->execute()){
+            $this->zamknij_polaczenie();
             return true;
-        }else{
-            return $stmt->error;
+        }
+        else{
+            $this->zamknij_polaczenie();
+            return $stmt_przedmiot->error;
         }
     }
 }
