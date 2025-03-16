@@ -1,5 +1,5 @@
 <?php
-    if(!isset($_GET['id'])) header('Location: index.php');
+    if(!isset($_GET['id'])) header('Location: index.php');      
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -37,10 +37,12 @@
                 $stan = $dane['stan'];
                 $srodek = $dane['srodek_trwaly'];
                 echo "<span><div class='naglowek-informacji'>ilość</div><div>$ilosc</div></span>";
-                echo "<span><div class='naglowek-informacji'>faktura</div><div><a href=''>pobierz</a></div></span>";
+                echo "<span><div class='naglowek-informacji'>faktura</div><div><a href='karta_przedmiotu.php?id=$id&faktura_id=$faktura'>pobierz</a></div></span>";
                 echo "<span><div class='naglowek-informacji'>miejsce</div><div>$miejsce</div></span>";
                 echo "<span><div class='naglowek-informacji'>stan</div><div>$stan</div></span>";
                 echo "<span><div class='naglowek-informacji'>środek trwały</div><div>$srodek</div></span>";
+
+                if(isset($_GET['faktura_id'])) $baza->wyswielt_fakture($_GET['faktura_id']);
             ?>
         </div>
     </main>

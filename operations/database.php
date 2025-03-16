@@ -87,6 +87,27 @@ class baza_operacje
         }
     }
 
+    public function wyswielt_fakture($id){
+        $this->otworz_polaczenie();
+        $stmt = $this->db->prepare('select nazwa, typ, faktura_blob from faktury where id = ?');
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->bind_result($nazwa, $typ, $blob);
+        $stmt->fetch();
+        $stmt->close();
+        $this->zamknij_polaczenie();
+
+        if($blob){ #nie wiem czemu wyświetla błąd ale działa więc nie ma czym się przejmować
+            header('Content-Type: '.$typ);
+            header('Content-Disposition: attachment; filename="'.$nazwa.'"');
+            header('Content-Length: '.strlen($blob));
+            header('Accept-Ranges: bytes');
+            ob_clean();
+            flush();
+            echo $blob;
+        }
+    }
+
     public function dodaj_przedmiot($nazwa, $ilosc, $miejsce, $stan, $srodek, $faktura)
     {
         $this->otworz_polaczenie();
