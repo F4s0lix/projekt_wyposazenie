@@ -18,9 +18,14 @@
         else if(empty($ilosc)) pokaz_wiadomosc('błąd: pusta ilość', true);
         else if(empty($miejsce)) pokaz_wiadomosc('błąd: brak miejsca', true);
         else if(empty($stan)) pokaz_wiadomosc('błąd: brak stanu', true);
+        else if(!$_FILES['faktura']['error'] === UPLOAD_ERR_OK) pokaz_wiadomosc('błąd: problem z przesłaniem faktury', true);
         else
         {
-            pokaz_wiadomosc('sukces! dodano', false);
+            require_once '../operations/database.php';
+            $baza = new baza_operacje;
+            $zapis_status = $baza->dodaj_przedmiot($nazwa, $ilosc, $miejsce, $stan, $srodek, $faktura);
+            if($zapis_status) pokaz_wiadomosc('dodano przedmiot', false);
+            else pokaz_wiadomosc("błąd: $zapis_status", true);
         }
     }
 ?>

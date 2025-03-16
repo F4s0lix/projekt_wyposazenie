@@ -86,5 +86,19 @@ class baza_operacje
             }
         }
     }
+
+    public function dodaj_przedmiot($nazwa, $ilosc, $miejsce, $stan, $srodek, $faktura)
+    {
+        $this->otworz_polaczenie();
+        $fakturaDane = file_get_contents($faktura['tmp_name']);
+
+        $stmt = $this->db->prepare('INSERT INTO rzecz (nazwa, ilosc, faktura, miejsce, stan, srodek_trwaly) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('sisssi', $nazwa, $ilosc, $fakturaDane, $miejsce, $stan, $srodek);
+        if( $stmt->execute()){
+            return true;
+        }else{
+            return $stmt->error;
+        }
+    }
 }
 ?>
