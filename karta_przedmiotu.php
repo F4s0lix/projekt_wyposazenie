@@ -1,5 +1,6 @@
 <?php
-    if(!isset($_GET['id'])) header('Location: index.php');      
+    if(!isset($_GET['id'])) header('Location: index.php');
+    else $id = $_GET['id'];
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -16,7 +17,7 @@
         </header>
         <div>
             <div><a href="app/dodaj.php">dodaj</a></div>
-            <div><a href="app/edytuj.php">edytuj</a></div>
+            <div><a href=<?php echo "app/edytuj.php?id=$id"?>>edytuj</a></div>
             <div><a href="app/wypozycz.php">wypożycz</a></div>
             <div><a href="app/wyszukaj.php">wyszukaj</a></div>
             <div><a href="app/osoba.php">osoby</a></div>
@@ -25,7 +26,6 @@
     <main>
         <div>
             <?php
-                $id = $_GET['id'];
                 require_once 'operations/database.php';
                 $baza = new baza_operacje;
                 $dane = $baza->przemiot($id);

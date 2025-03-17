@@ -88,6 +88,9 @@ class baza_operacje
     }
 
     public function wyswielt_fakture($id){
+        $nazwa = '';
+        $typ = '';
+        $blob = '';
         $this->otworz_polaczenie();
         $stmt = $this->db->prepare('select nazwa, typ, faktura_blob from faktury where id = ?');
         $stmt->bind_param('i', $id);
@@ -135,6 +138,18 @@ class baza_operacje
             $this->zamknij_polaczenie();
             return $stmt_przedmiot->error;
         }
+    }
+    public function nazwa_faktury($id){
+        $this->otworz_polaczenie();
+        $nazwa = '';
+        $stmt = $this->db->prepare('SELECT nazwa FROM faktury WHERE id = ?');
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->bind_result($nazwa);
+        $stmt->fetch();
+        $stmt->close();
+        $this->zamknij_polaczenie();
+        return substr($nazwa, -12, 12);
     }
 }
 ?>

@@ -127,11 +127,12 @@ form > *{
     margin: 3px 40px 3px 40px;
 }
 
-form > input{
+form input{
     border: 2px solid #630;
     border-radius: 15px;
     background-color: #6cf;
     font-weight: bold;
+    text-align: center;
 }
 
 table{
@@ -234,4 +235,41 @@ footer > a:hover{
     z-index: 1;
     border-radius: 15px;
     background-color: #693;
+}
+
+.formularz_id{
+    margin: 20%;
+}
+
+.edycjafaktury{
+    border: none;
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    width: 100%;
+}
+
+.edycjafaktury > span{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    width: 66%;
+    font-size: larger;
+    border-bottom: 1px dashed #666;
+}
+
+.edycjafaktury > input[type=submit]{
+    position: fixed;
+    right: 20%;
+    bottom: 10dvh;
+    z-index: 1;
+    border: 2px dashed #630;
+    border-radius: 15px;
+    background-color: #336;
+    padding: 20px;
+    color:#ccc;
+    font-weight: bold;
 }
