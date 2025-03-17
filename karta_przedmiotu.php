@@ -36,8 +36,9 @@
                 $miejsce = $dane['miejsce'];
                 $stan = $dane['stan'];
                 $srodek = $dane['srodek_trwaly'];
+                $faktura_wyswietl = empty($faktura)?'brak':"<a href='karta_przedmiotu.php?id=$id&faktura_id=$faktura'>pobierz</a>";
                 echo "<span><div class='naglowek-informacji'>ilość</div><div>$ilosc</div></span>";
-                echo "<span><div class='naglowek-informacji'>faktura</div><div><a href='karta_przedmiotu.php?id=$id&faktura_id=$faktura'>pobierz</a></div></span>";
+                echo "<span><div class='naglowek-informacji'>faktura</div><div>$faktura_wyswietl</div></span>";
                 echo "<span><div class='naglowek-informacji'>miejsce</div><div>$miejsce</div></span>";
                 echo "<span><div class='naglowek-informacji'>stan</div><div>$stan</div></span>";
                 echo "<span><div class='naglowek-informacji'>środek trwały</div><div>$srodek</div></span>";
