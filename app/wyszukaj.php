@@ -20,7 +20,35 @@
         </div>
     </nav>
     <main>
-        
+        <form action="wyszukaj.php" method="get">
+            <select name="co_wyszukac" class="zniknij">
+                <option value="rzecz">przedmiot</option>
+                <option value="osoby">osobę</option>
+            </select>
+            <input type="submit" value="dalej" class="zniknij">
+            <?php   
+                echo '<style>.zniknij{display:none;}</style>';
+                if(isset($_GET["co_wyszukac"], $_GET['q']))
+                {
+                    
+                }
+                else if(isset($_GET['co_wyszukac']))
+                {
+                    echo '<form action="wyszukaj.php" method="get">';
+                    echo '<input type="hidden" name="co_wyszukac" value="'.$_GET['co_wyszukac'].'">';
+                    if($_GET['co_wyszukac'] == 'rzecz')
+                    {
+                        echo '<input type="search" name="q" placeholder="nazwa przedmiotu">';
+                    }
+                    else if($_GET['co_wyszukac'] == 'osoby')
+                    {
+                        echo '<input type="search" name="q" placeholder="nazwa osoby">';
+                    }
+                    echo '<input type="submit" value="szukaj">';
+                    echo '</form>';
+                }
+            ?>
+        </form>
     </main>
     <footer>
         Stworzono przez: <a href="mailto:jan.wawrzyniak@zhp.pl">Jan Wawrzyniak</a>

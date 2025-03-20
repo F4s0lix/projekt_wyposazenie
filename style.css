@@ -144,7 +144,7 @@ form > *{
     margin: 3px 40px 3px 40px;
 }
 
-form input{
+form input, select{
     border: 2px solid #630;
     border-radius: 15px;
     background-color: #6cf;

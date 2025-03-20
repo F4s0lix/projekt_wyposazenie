@@ -100,7 +100,7 @@ class baza_operacje
         $stmt->close();
         $this->zamknij_polaczenie();
 
-        if($blob){ #nie wiem czemu wyświetla błąd ale działa więc nie ma czym się przejmować
+        if($blob){ 
             header('Content-Type: '.$typ);
             header('Content-Disposition: attachment; filename="'.$nazwa.'"');
             header('Content-Length: '.strlen($blob));
@@ -163,6 +163,10 @@ class baza_operacje
         $stmt->execute();
         $stmt->close();
         $this->zamknij_polaczenie();
+    }
+    public function wyszukaj($tabela, $tekst)
+    {
+        $this->otworz_polaczenie();
     }
 }
 ?>
