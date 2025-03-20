@@ -25,12 +25,13 @@ FORM;
         $srodek = $dane['srodek_trwaly']?'checked':'';
         $faktura_wyswietl = empty($faktura)?'brak':$baza->nazwa_faktury($faktura);
         echo <<<FORM
-        <form class='edycjafaktury' method='POST' action='../operations/edytuj.php'>
-        <span><div class='naglowek-informacji'>ilość</div><div><input type="number" value="$ilosc"></div></span>
-        <span><div class='naglowek-informacji'>faktura</div><div><input type="file" value="$faktura_wyswietl"></div></span>
-        <span><div class='naglowek-informacji'>miejsce</div><div><input type="text" value="$miejsce"></div></span>
-        <span><div class='naglowek-informacji'>stan</div><div><input type="text" value="$stan"></div></span>
-        <span><div class='naglowek-informacji'>środek trwały</div><div><input type="checkbox" $srodek></div></span>
+        <form class='edycjafaktury' method='POST' action='../operations/edytuj.php' enctype='multipart/form-data'>
+        <input type="hidden" name="id" value="$id">
+        <span><div class='naglowek-informacji'>ilość</div><div><input type="number" value="$ilosc" name="ilosc"></div></span>
+        <span><div class='naglowek-informacji'>faktura</div><div><input type="file" value="$faktura_wyswietl" name="plik"></div></span>
+        <span><div class='naglowek-informacji'>miejsce</div><div><input type="text" value="$miejsce" name="miejsce"></div></span>
+        <span><div class='naglowek-informacji'>stan</div><div><input type="text" value="$stan" name="stan"></div></span>
+        <span><div class='naglowek-informacji'>środek trwały</div><div><input type="checkbox" $srodek name="srodek"></div></span>
         <input type="submit" value="zapisz">
         </form>
 FORM;    
@@ -50,11 +51,11 @@ FORM;
             <a href="../index.php">REJESTR WYPOSAŻENIA</a> 
         </header>
         <div>
-            <div><a href="../app/dodaj.php">dodaj</a></div>
-            <div><a href="../app/edytuj.php">edytuj</a></div>
-            <div><a href="../app/wypozycz.php">wypożycz</a></div>
-            <div><a href="../app/wyszukaj.php">wyszukaj</a></div>
-            <div><a href="../app/osoba.php">osoby</a></div>
+            <div><a href="dodaj.php">dodaj</a></div>
+            <div><a href="edytuj.php">edytuj</a></div>
+            <div><a href="wypozycz.php">wypożycz</a></div>
+            <div><a href="wyszukaj.php">wyszukaj</a></div>
+            <div><a href="osoba.php">osoby</a></div>
         </div>
     </nav>
     <main>

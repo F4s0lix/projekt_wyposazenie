@@ -90,6 +90,23 @@ main{
         flex-flow: column nowrap;
         align-items: center;
     }
+    .edycjafaktury > input[type=submit]{
+        position: fixed;
+        right: 13%;
+        bottom: 10dvh;
+        z-index: 1;
+        border: 2px dashed #630;
+        border-radius: 15px;
+        background-color: #336;
+        padding: 20px;
+        color:#ccc;
+        font-weight: bold;
+        width: 20%;
+    }
+    .edycjafaktury > input{
+        width: 50%; /*TODO: napraw CSS dla telefonów*/
+        padding: 0; 
+    }
 }
 
 @media(min-width:601px)
