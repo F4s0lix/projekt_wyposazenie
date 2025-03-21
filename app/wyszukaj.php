@@ -26,16 +26,12 @@
                 <option value="osoby">osobę</option>
             </select>
             <input type="submit" value="dalej" class="zniknij">
-            <?php 
-                if(isset($_GET["co_wyszukac"], $_GET['q']))
+        </form>
+            <?php
+                if(isset($_GET['co_wyszukac']))
                 {
                     echo '<style>.zniknij{display:none;}</style>';
-
-                }
-                else if(isset($_GET['co_wyszukac']))
-                {
-                    echo '<style>.zniknij{display:none;}</style>';
-                    echo '<form action="wyszukaj.php" method="get">';
+                    echo '<form action="znaleziono.php" method="post">';
                     echo '<input type="hidden" name="co_wyszukac" value="'.$_GET['co_wyszukac'].'">';
                     if($_GET['co_wyszukac'] == 'rzecz')
                     {
@@ -53,7 +49,6 @@
                     echo '</form>';
                 }
             ?>
-        </form>
     </main>
     <footer>
         Stworzono przez: <a href="mailto:jan.wawrzyniak@zhp.pl">Jan Wawrzyniak</a>

@@ -202,20 +202,63 @@ class baza_operacje
         $this->zamknij_polaczenie();
         if($faktura['name'] !== '') $this->zmien_fakture($id, $faktura);
     }
-    public function wyszukaj($tabela, $q)
+    public function wyszukaj($tabela, $qn, $qt, $qm=null, $qs=null)
     {
         $this->otworz_polaczenie();
-        if($tabela == '');
+        if($tabela == 'rzecz'){
+            $data = $this->wyszukaj_rzecz($qn, $qm, $qs, $qt);
+        }else{
+            $data = $this->wyszukaj_osobe($qn, $qt);
+        }
+        return $data;
     }
-    public function wyszukaj_osobe($qn, $qm, $qs, $qt)
+    public function wyszukaj_rzecz($qn, $qm, $qs, $qt)
     {
-        $stmt= $this->db->prepare('SELECT id, nazwa, faktura_id, miejsce, stan, srodek_trwaly FROM rzecz WHERE nazwa LIKE %?% AND miejsce LIKE %?% AND stan LIKE %?% AND srodek_trwaly = ?');
+        $id = '';
+        $nazwa = '';
+        $faktura = '';
+        $miejsce = '';
+        $stan = '';
+        $srodek = '';
+        $qn = '%'.$qn.'%';
+        $qm = '%'.$qm.'%';
+        $qs = '%'.$qs.'%';
+        $stmt= $this->db->prepare('SELECT id, nazwa, faktura_id, miejsce, stan, srodek_trwaly FROM rzecz WHERE nazwa LIKE ? AND miejsce LIKE ? AND stan LIKE ? AND srodek_trwaly = ?');
         $stmt->bind_param('sssi', $qn, $qm, $qs, $qt);
         $stmt->execute();
-
+        $data = [];
+        $stmt->bind_result($id, $nazwa, $faktura, $miejsce, $stan, $srodek);
+        while($stmt->fetch())
+        {
+            $tmp['id'] = $id;
+            $tmp['nazwa'] = $nazwa;
+            $tmp['faktura'] = $faktura;
+            $tmp['miejsce'] = $miejsce;
+            $tmp['stan'] = $stan;
+            $tmp['srodek_trwaly'] = $srodek;
+            $data[] = $tmp;
+        }
+        $stmt->close();
+        return $data;
     }
-    public function wyszukaj_rzecz($qn, $qt)
+    public function wyszukaj_osobe($qn, $qt)
     {
+        $email = '';
+        $numer = '';
+        $stmt = $this->db->prepare('SELECT email, numer FROM osoby WHERE email LIKE ? AND numer LIKE ?');
+        $qn = '%'.$qn.'%';
+        $qt = '%'.$qt.'%';
+        $stmt->bind_param('ss', $qn, $qt);
+        $stmt->execute();
+        $data = [];
+        $stmt->bind_result($email, $numer);
+        while($stmt->fetch())
+        {
+            $tmp['email'] = $email;
+            $tmp['numer'] = $numer;
+            $data[] = $tmp;
+        }
+        return $data;
     }
 }
 ?>
