@@ -159,14 +159,48 @@ class baza_operacje
         $this->zamknij_polaczenie();
         return substr($nazwa, -12, 12);
     }
-    public function edytuj_przedmiot($id, $ilosc, $miejsce, $stan, $srodek)
+    public function zmien_fakture($id_przedmiotu, $faktura)
     {
-        $this->otworz_polaczenie(); #TODO: zmiana faktury na inną
+        $this->otworz_polaczenie();
+        $faktura_id = '';
+        $stmt = $this->db->prepare('SELECT faktura_id FROM rzecz WHERE id = ?');
+        $stmt->bind_param('i', $id_przedmiotu);
+        $stmt->execute();
+        $stmt->bind_result($faktura_id);
+        $stmt->fetch();
+        $stmt->close();
+        if($faktura_id != null){
+            $stmt = $this->db->prepare('UPDATE faktury SET nazwa = ?, typ = ?, faktura_blob = ? WHERE id = ?');
+            $stmt->bind_param('sssi', $faktura['name'], $faktura['type'], $faktura['tmp_name'], $faktura_id);
+            $stmt->execute();
+            $stmt->close();
+        }else{
+            $stmt = $this->db->prepare('INSERT INTO faktury (nazwa, typ, faktura_blob) VALUES (?, ?, ?)');
+            $stmt->bind_param('sss', $faktura['name'], $faktura['type'], $faktura['tmp_name']);
+            $stmt->execute();
+            $stmt->close();
+            $stmt2 = $this->db->prepare('SELECT id FROM faktury WHERE nazwa = ?');
+            $stmt2->bind_param('s', $faktura['name']);
+            $stmt2->execute();
+            $stmt2->bind_result($faktura_id);
+            $stmt2->fetch();
+            $stmt2->close();
+            $stmt3 = $this->db->prepare('UPDATE rzecz SET faktura_id = ? WHERE id = ?');
+            $stmt3->bind_param('ii', $faktura_id, $id_przedmiotu);
+            $stmt3->execute();
+            $stmt3->close();
+        }
+        $this->zamknij_polaczenie();
+    }
+    public function edytuj_przedmiot($id, $ilosc, $miejsce, $stan, $srodek, $faktura)
+    {
+        $this->otworz_polaczenie();
         $stmt = $this->db->prepare('UPDATE rzecz SET ilosc = ?, miejsce = ?, stan = ?, srodek_trwaly = ? WHERE id = ?');
         $stmt->bind_param('issii', $ilosc, $miejsce, $stan, $srodek, $id);
         $stmt->execute();
         $stmt->close();
         $this->zamknij_polaczenie();
+        if($faktura['name'] !== '') $this->zmien_fakture($id, $faktura);
     }
     public function wyszukaj($tabela, $q)
     {
