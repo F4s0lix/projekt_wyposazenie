@@ -7,9 +7,9 @@
         #$plik = $_POST['plik'];
         $miejsce = htmlspecialchars($_POST['miejsce']);
         $stan = htmlspecialchars($_POST['stan']);
-        $srodek = htmlspecialchars($_POST['srodek']);
+        $srodek = $_POST['srodek']=='on'?1:0;
         $baza->edytuj_przedmiot($id, $ilosc, $miejsce, $stan, $srodek);
-        header("Location: ../karta_przedmiotu.php?id=$id");
+        #header("Location: ../karta_przedmiotu.php?id=$id");
     }
     else header("Location: ../app/edytuj.php?id=$id");
 ?>

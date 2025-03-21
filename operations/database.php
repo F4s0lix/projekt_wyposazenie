@@ -66,25 +66,29 @@ class baza_operacje
     }
     public function przemiot($id)
     {
+        $nazwa = '';
+        $ilosc = '';
+        $faktura = '';
+        $miejsce = '';
+        $stan = '';
+        $srodek = '';
         $this->otworz_polaczenie();
-        $query = 'SELECT id, nazwa, ilosc, faktura_id, miejsce, stan, srodek_trwaly FROM rzecz WHERE id = '.$id;
-        $result = $this->db->query($query);
+        $stmt = $this->db->prepare('SELECT id, nazwa, ilosc, faktura_id, miejsce, stan, srodek_trwaly FROM rzecz WHERE id = ?');
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->bind_result($id, $nazwa, $ilosc, $faktura, $miejsce, $stan, $srodek);
+        $stmt->fetch();
+        $stmt->close();
         $this->zamknij_polaczenie();
-        if($result->num_rows > 0)
-        {
-            while ($row = $result->fetch_assoc())
-            {
-                $data = [];
-                $data['id'] = $row['id'];
-                $data['nazwa'] = $row['nazwa'];
-                $data['ilosc'] = $row['ilosc'];
-                $data['faktura'] = $row['faktura_id'];
-                $data['miejsce'] = $row['miejsce'];
-                $data['stan'] = $row['stan'];
-                $data['srodek_trwaly'] = $row['srodek_trwaly']?'tak':'nie';
-                return $data;
-            }
-        }
+        $data = [];
+        $data['id'] = $id;
+        $data['nazwa'] = $nazwa;
+        $data['ilosc'] = $ilosc;
+        $data['faktura'] = $faktura;
+        $data['miejsce'] = $miejsce;
+        $data['stan'] = $stan;
+        $data['srodek_trwaly'] = $srodek;
+        return $data;
     }
 
     public function wyswielt_fakture($id){
@@ -164,9 +168,20 @@ class baza_operacje
         $stmt->close();
         $this->zamknij_polaczenie();
     }
-    public function wyszukaj($tabela, $tekst)
+    public function wyszukaj($tabela, $q)
     {
         $this->otworz_polaczenie();
+        if($tabela == '');
+    }
+    public function wyszukaj_osobe($qn, $qm, $qs, $qt)
+    {
+        $stmt= $this->db->prepare('SELECT id, nazwa, faktura_id, miejsce, stan, srodek_trwaly FROM rzecz WHERE nazwa LIKE %?% AND miejsce LIKE %?% AND stan LIKE %?% AND srodek_trwaly = ?');
+        $stmt->bind_param('sssi', $qn, $qm, $qs, $qt);
+        $stmt->execute();
+
+    }
+    public function wyszukaj_rzecz($qn, $qt)
+    {
     }
 }
 ?>
