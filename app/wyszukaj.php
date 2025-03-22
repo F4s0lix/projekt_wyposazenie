@@ -21,6 +21,7 @@
     </nav>
     <main>
         <form action="wyszukaj.php" method="get">
+            <h1 class="zniknij">Co wyszukać?</h1>
             <select name="co_wyszukac" class="zniknij">
                 <option value="rzecz">przedmiot</option>
                 <option value="osoby">osobę</option>
@@ -32,6 +33,7 @@
                 {
                     echo '<style>.zniknij{display:none;}</style>';
                     echo '<form action="znaleziono.php" method="post">';
+                    echo '<h1>Wyszukaj '.($_GET['co_wyszukac'] == 'rzecz'?'przedmiot':'osobę').'</h1>';
                     echo '<input type="hidden" name="co_wyszukac" value="'.$_GET['co_wyszukac'].'">';
                     if($_GET['co_wyszukac'] == 'rzecz')
                     {
