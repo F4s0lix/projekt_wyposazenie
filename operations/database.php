@@ -210,6 +210,7 @@ class baza_operacje
         }else{
             $data = $this->wyszukaj_osobe($qn, $qt);
         }
+        $this->zamknij_polaczenie();
         return $data;
     }
     public function wyszukaj_rzecz($qn, $qm, $qs, $qt)
@@ -258,6 +259,47 @@ class baza_operacje
             $tmp['numer'] = $numer;
             $data[] = $tmp;
         }
+        return $data;
+    }
+    public function wszystkie_osoby(){
+        $this->otworz_polaczenie();
+        $email = '';
+        $numer = '';
+        $stmt = $this->db->prepare('SELECT email, numer FROM osoby');
+        $stmt->execute();
+        $data = [];
+        $stmt->bind_result($email, $numer);
+        while($stmt->fetch())
+        {
+            $tmp['email'] = $email;
+            $tmp['numer'] = $numer; 
+            $data[] = $tmp;
+        }
+        $stmt->close();
+        $this->zamknij_polaczenie();
+        return $data;
+    }
+    public function wypozyczone($email)
+    {
+        $nazwa = '';
+        $wypozyczenie = '';
+        $zwrot = '';
+        $email = htmlspecialchars($email);
+        $this->otworz_polaczenie();
+        $stmt = $this->db->prepare('SELECT rzecz.nazwa, wypozyczenia.data_wypozyczenia, wypozyczenia.data_zwrotu FROM rzecz, wypozyczenia WHERE rzecz.id = wypozyczenia.id_rzeczy AND wypozyczenia.email = ?');
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $data = [];
+        $stmt->bind_result($nazwa, $wypozyczenie, $zwrot);
+        while($stmt->fetch())
+        {
+            $tmp['nazwa'] = $nazwa;
+            $tmp['wypozyczenie'] = $wypozyczenie;
+            $tmp['zwrot'] = $zwrot;
+            $data[] = $tmp;
+        }
+        $stmt->close();
+        $this->zamknij_polaczenie();
         return $data;
     }
 }

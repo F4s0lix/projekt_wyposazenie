@@ -20,7 +20,21 @@
         </div>
     </nav>
     <main>
-        
+        <div class="wyniki">
+            <table>
+                <tr><th>email</th><th>numer</th><th>wypożyczone</th></tr>
+                <?php
+                    require_once '../operations/database.php';
+                    $baza = new baza_operacje();
+                    $dane = $baza->wszystkie_osoby();
+                    foreach ($dane as $k => $v) {
+                        $email = $v['email'];
+                        $numer = $v['numer'];
+                        echo "<tr><td>$email</td><td>$numer</td><td><a href='wypozyczone.php?email=$email'>zobacz</a></td></tr>";
+                    }
+                ?>
+            </table>
+        </div>
     </main>
     <footer>
         Stworzono przez: <a href="mailto:jan.wawrzyniak@zhp.pl">Jan Wawrzyniak</a>

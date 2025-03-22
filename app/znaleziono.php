@@ -56,11 +56,11 @@
                     echo '</table>';
                 }else if(isset($_POST['co_wyszukac'])){
                     echo '<table>';
-                    echo '<tr><th>email</th><th>numer</th></tr>';
+                    echo '<tr><th>email</th><th>numer</th><th>wypożyczone</th></tr>';
                     foreach ($data as $k => $dane) {
                         $email = $dane['email'];
                         $numer = $dane['numer'];
-                        echo "<tr><td>$email</td><td>$numer</td></tr>";
+                        echo "<tr><td>$email</td><td>$numer</td><td><a href='wypozyczone.php?email=$email'>zobacz</a></td></tr>";
                     }
                     echo '</table>';
                 }
