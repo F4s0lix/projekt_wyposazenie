@@ -41,7 +41,6 @@
                         $miejsce = $dane['miejsce'];
                         $stan = $dane['stan'];
                         $srodek = $dane['srodek_trwaly']?'TAK':'NIE';
-                        #TODO: LINK DO PRZEDMIOTU
                         echo "<tr><td>$nazwa</td><td>$ilosc</td><td>$miejsce</td><td>$stan</td><td><a href='karta_przedmiotu.php?id=$id'>kliknij</a></td></tr>";
                     }
                 ?>

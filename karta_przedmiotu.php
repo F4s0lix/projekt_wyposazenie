@@ -46,6 +46,7 @@
                 if(isset($_GET['faktura_id'])) $baza->wyswielt_fakture($_GET['faktura_id']);
             ?>
         </div>
+        <div id="wypozycz"><a href="app/wypozycz.php?id=<?php echo $id;?>">wypożycz</a></div>
     </main>
     <footer>
         Stworzono przez: <a href="mailto:jan.wawrzyniak@zhp.pl"> Jan Wawrzyniak</a>

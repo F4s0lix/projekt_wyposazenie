@@ -314,5 +314,42 @@ class baza_operacje
         else return false;
         
     }
+    public function wszystkie_rzeczy()
+    {
+        #funkcja zwraca listę z słownikami zawierającymi dane osatnich 7 dodanych rzeczy
+        $this->otworz_polaczenie();
+        $query = 'SELECT id, nazwa, ilosc, faktura_id, miejsce, stan, srodek_trwaly FROM rzecz';
+        $result = $this->db->query($query);
+        $ostatnie = [];
+        if($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $data = [];
+                $data['id'] = $row['id'];
+                $data['nazwa'] = $row['nazwa'];
+                $data['ilosc'] = $row['ilosc'];
+                $data['faktura'] = $row['faktura_id'];
+                $data['miejsce'] = $row['miejsce'];
+                $data['stan'] = $row['stan'];
+                $data['srodek_trwaly'] = $row['srodek_trwaly'];
+                $ostatnie[] = $data;
+            }
+        }
+        $this->zamknij_polaczenie();
+        return $ostatnie;
+    }
+    public function wypozycz($id_rzeczy, $email, $data_zwrotu)
+    {
+        $this->otworz_polaczenie();
+        $id_rzeczy = htmlspecialchars($id_rzeczy);
+        $email = htmlspecialchars($email);
+        $data_zwrotu = htmlspecialchars($data_zwrotu);
+        $stmt = $this->db->prepare('INSERT INTO wypozyczenia (id_rzeczy, email, data_wypozyczenia, data_zwrotu) VALUES (?, ?, NOW(), ?)');
+        $stmt->bind_param('iss', $id_rzeczy, $email, $data_zwrotu);
+        $stmt->execute();
+        $stmt->close();
+        $this->zamknij_polaczenie();
+    }
 }
 ?>

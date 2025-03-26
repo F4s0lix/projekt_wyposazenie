@@ -294,3 +294,25 @@ footer > a:hover{
 .wyniki{
     overflow-y: auto;
 }
+
+#wypozycz{
+    position: fixed;
+    width: 8%;
+    height: 8%;
+    right: 20%;
+    bottom: 6dvh;
+    z-index: 1;
+    border: 2px dashed #630;
+    border-radius: 15px;
+    background-color: #336;
+    color:#ccc;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#wypozycz > a{
+    text-decoration: none;
+    color: #ccc;
+}
