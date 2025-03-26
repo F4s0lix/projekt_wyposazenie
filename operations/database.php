@@ -302,5 +302,17 @@ class baza_operacje
         $this->zamknij_polaczenie();
         return $data;
     }
+    public function dodaj_osobe($email, $numer)
+    {
+        $this->otworz_polaczenie();
+        if($numer == '') $numer = null; 
+        $stmt = $this->db->prepare('INSERT INTO osoby (email, numer) VALUES (?, ?)');
+        $stmt->bind_param('si', $email, $numer);
+        $stmt->execute();
+        $this->zamknij_polaczenie();
+        if($stmt->affected_rows > 0) return true;
+        else return false;
+        
+    }
 }
 ?>

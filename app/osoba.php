@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TYTUŁ</title>
+    <title>osoby</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -23,6 +23,7 @@
         <div class="wyniki">
             <table>
                 <tr><th>email</th><th>numer</th><th>wypożyczone</th></tr>
+                <td colspan="3"><a href="dodaj_osobe.php">dodaj osobę</a></td>
                 <?php
                     require_once '../operations/database.php';
                     $baza = new baza_operacje();
