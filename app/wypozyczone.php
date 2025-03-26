@@ -1,5 +1,11 @@
 <?php
 if(!isset($_GET['email'])) header('Location: ../index.php');
+require_once '../operations/database.php';
+$baza = new baza_operacje();
+if(isset($_GET['email'], $_GET['id'], $_GET['dw'], $_GET['dz'])) 
+{
+    $baza->usun_wypozyczenie($_GET['email'], $_GET['id'], $_GET['dw'], $_GET['dz']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -26,16 +32,16 @@ if(!isset($_GET['email'])) header('Location: ../index.php');
         <div class="wyniki">
             <h1>Wypożyczone przez <?php echo $_GET['email']?></h1>
             <table>
-                <tr><th>nazwa</th><th>data wypożyczenia</th><th>data zwrotu</th></tr>
+                <tr><th>nazwa</th><th>data wypożyczenia</th><th>data zwrotu</th><th></th></tr>
                 <?php
-                    require_once '../operations/database.php';
-                    $baza = new baza_operacje();
-                    $dane = $baza->wypozyczone($_GET['email']);
+                $email = $_GET['email'];
+                    $dane = $baza->wypozyczone($email);
                     foreach($dane as $k => $v) {
+                        $id = $v['id'];
                         $nazwa = $v['nazwa'];
                         $wypozyczenie = $v['wypozyczenie'];
                         $zwrot = $v['zwrot'];
-                        echo "<tr><td>$nazwa</td><td>$wypozyczenie</td><td>$zwrot</td></tr>";
+                        echo "<tr><td>$nazwa</td><td>$wypozyczenie</td><td>$zwrot</td><td><a href='wypozyczone.php?email=$email&id=$id&dw=$wypozyczenie&dz=$zwrot'>usuń</a></td></tr>";
                     }
                 ?>
             </table>

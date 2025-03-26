@@ -281,18 +281,20 @@ class baza_operacje
     }
     public function wypozyczone($email)
     {
+        $id = '';
         $nazwa = '';
         $wypozyczenie = '';
         $zwrot = '';
         $email = htmlspecialchars($email);
         $this->otworz_polaczenie();
-        $stmt = $this->db->prepare('SELECT rzecz.nazwa, wypozyczenia.data_wypozyczenia, wypozyczenia.data_zwrotu FROM rzecz, wypozyczenia WHERE rzecz.id = wypozyczenia.id_rzeczy AND wypozyczenia.email = ?');
+        $stmt = $this->db->prepare('SELECT rzecz.id, rzecz.nazwa, wypozyczenia.data_wypozyczenia, wypozyczenia.data_zwrotu FROM rzecz, wypozyczenia WHERE rzecz.id = wypozyczenia.id_rzeczy AND wypozyczenia.email = ?');
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $data = [];
-        $stmt->bind_result($nazwa, $wypozyczenie, $zwrot);
+        $stmt->bind_result($id, $nazwa, $wypozyczenie, $zwrot);
         while($stmt->fetch())
         {
+            $tmp['id'] = $id;
             $tmp['nazwa'] = $nazwa;
             $tmp['wypozyczenie'] = $wypozyczenie;
             $tmp['zwrot'] = $zwrot;
@@ -347,6 +349,19 @@ class baza_operacje
         $data_zwrotu = htmlspecialchars($data_zwrotu);
         $stmt = $this->db->prepare('INSERT INTO wypozyczenia (id_rzeczy, email, data_wypozyczenia, data_zwrotu) VALUES (?, ?, NOW(), ?)');
         $stmt->bind_param('iss', $id_rzeczy, $email, $data_zwrotu);
+        $stmt->execute();
+        $stmt->close();
+        $this->zamknij_polaczenie();
+    }
+    public function usun_wypozyczenie($email, $id, $dw, $dz)
+    {
+        $this->otworz_polaczenie();
+        $id_rzeczy = htmlspecialchars($id);
+        $email = htmlspecialchars($email);
+        $data_zwrotu = htmlspecialchars($dz);
+        $data_wypozyczenia = htmlspecialchars($dw);
+        $stmt = $this->db->prepare('DELETE FROM wypozyczenia WHERE id_rzeczy = ? AND email = ? AND data_wypozyczenia = ? AND data_zwrotu = ?');
+        $stmt->bind_param('isss', $id_rzeczy, $email, $data_wypozyczenia, $data_zwrotu);
         $stmt->execute();
         $stmt->close();
         $this->zamknij_polaczenie();
