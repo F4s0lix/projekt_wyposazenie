@@ -48,9 +48,9 @@ class baza_operacje
     }
     public function ostatnie_wypozyczenia()
     {
-        #funkcja zwraca listę z słownikami zawierającymi dane osatnich 6 wypożyczeń
+        #funkcja zwraca listę z słownikami zawierającymi dane osatnich 5 wypożyczeń
         $this->otworz_polaczenie();
-        $query = 'SELECT wypozyczenia.email, rzecz.nazwa, wypozyczenia.data_zwrotu FROM wypozyczenia, rzecz WHERE rzecz.id = wypozyczenia.id_rzeczy ORDER BY wypozyczenia.data_wypozyczenia ASC LIMIT 6';
+        $query = 'SELECT wypozyczenia.email, rzecz.nazwa, wypozyczenia.data_zwrotu FROM wypozyczenia, rzecz WHERE rzecz.id = wypozyczenia.id_rzeczy ORDER BY wypozyczenia.data_wypozyczenia ASC LIMIT 5';
         $result = $this->db->query($query);
         $ostatnie = [];
         if($result->num_rows > 0)

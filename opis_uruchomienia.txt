@@ -1,0 +1,6 @@
+1. rozpakuj projekt_wyposazenie.zip do folderu "htdocs"
+2. uruchom program xampp, uruchom Apache i MySQL 
+3. otwórz w przeglądarce http://localhost/phpmyadmin
+4. dodaj nową bazę danych o nazwie "rejestr_wyposazenia"
+5. zaimportuj wypakowany plik "rejestr_wyposazenia.sql"
+6. strona będzie działać pod linkiem "http://localhost/projekt_wyposazenie/" 
