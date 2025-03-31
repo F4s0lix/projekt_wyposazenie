@@ -1,9 +1,11 @@
 <?php
+    #blok zapisuje ID do zmiennej i importuje klasę
     if(isset($_GET['id'])) $id = $_GET['id'];
     require_once '../operations/database.php';
     $baza = new baza_operacje;
     
     function brak_id(){
+        #funkcja wyświetla formularz do podania ID przedmiotu
         echo <<<FORM
             <form method='GET' action='edytuj.php' class='formularz_id'>
                 <label for='id'>Podaj ID przedmiotu: </label>
@@ -13,6 +15,7 @@
 FORM;
     }
     function jest_id(){
+        #funkcja wyświetla kartę przedmiotu z funkcją edytowania danych
         global $id;
         global $baza;
         $dane = $baza->przemiot($id);
@@ -61,6 +64,7 @@ FORM;
     <main>
         <div>
             <?php
+                #zależnie od tego czy jest ID wywoływana jest odpowiednia funkcja
                 if(isset($_GET['id'])) jest_id();
                 else brak_id();
             ?>

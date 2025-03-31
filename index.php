@@ -31,6 +31,7 @@
                     <th>karta przemiotu</th>
                 </tr>
                 <?php
+                    #blok wyświetla ostatnio dodane przedmiotu
                     require_once 'operations/database.php';
                     $baza = new baza_operacje;
                     $dodania = $baza->ostatnie_dodania();
@@ -55,6 +56,7 @@
                     <th>data zwrotu</th>
                 </tr>
                 <?php
+                    #kod wyświetla ostatnie wypożyczenia
                     $wypozyczenia = $baza->ostatnie_wypozyczenia();
                     foreach ($wypozyczenia as $k => $dane) {
                         $email = $dane['email'];

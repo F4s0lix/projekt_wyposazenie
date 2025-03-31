@@ -26,6 +26,7 @@
     <main>
         <div>
             <?php
+                #kod wyświetla wszystkie informacje o przedmiocie
                 require_once 'operations/database.php';
                 $baza = new baza_operacje;
                 $dane = $baza->przemiot($id);

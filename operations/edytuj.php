@@ -1,4 +1,5 @@
 <?php
+    #plik edytuje dany przedmiot i przekierowuje na jego kartę
     if(isset($_POST['id'], $_POST['ilosc'], $_POST['miejsce'], $_POST['stan'])){
         require_once 'database.php';
         $baza = new baza_operacje;

@@ -1,6 +1,7 @@
 <?php
     function przenies($email)
     {
+        #funkcja przenosi do wypożyczonych rzeczy przez daną osobę
         header("Location: wypozyczone.php?email=$email");
     }
 ?>
@@ -27,15 +28,18 @@
     </nav>
     <main>
         <?php
+            #blok importuje klasę z operacjami na bazie
             require_once '../operations/database.php';
             $baza = new baza_operacje();
             if(isset($_GET['id'], $_GET['osoba']))
             {
+                #jeżeli podana jest ID i osoba to wprowadzane jest do bazy wypożyczenie
                 $baza->wypozycz($_GET['id'], $_GET['osoba'], $_GET['data']);
                 przenies($_GET['osoba']);
             }
             else if(isset($_GET['id']))
             {
+                #jeżeli jest tylko ID wyświetla formularz do wybrania osoby
                 echo '<form action="wypozycz.php" method="get">
                         <input type="hidden" name="id" value="'.$_GET['id'].'">
                         <label for="osoba">Osoba:</label>
@@ -54,7 +58,8 @@
             } 
             else
             {
-            echo '<div>
+            #jeżeli nie ma ani ID ani osoby wyświetla formularz do wybrania przedmiotu
+            echo '<div class="wyniki">
             <h2>wybierz przedmiot</h2>
             <table>
                 <tr>
@@ -64,7 +69,7 @@
                     <th>stan</th>
                     <th>wybierz</th>
                 </tr>';
-                    $dodania = $baza->ostatnie_dodania();
+                    $dodania = $baza->wszystkie_rzeczy();
                     foreach ($dodania as $k => $dane) {
                         $id = $dane['id'];
                         $nazwa = $dane['nazwa'];

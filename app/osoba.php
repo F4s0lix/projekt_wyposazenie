@@ -25,6 +25,7 @@
                 <tr><th>email</th><th>numer</th><th>wypożyczone</th></tr>
                 <td colspan="3"><a href="dodaj_osobe.php">dodaj osobę</a></td>
                 <?php
+                    # blok wyświetla wszystkich użytkowników wraz z linkiem od ich wypożyczeń
                     require_once '../operations/database.php';
                     $baza = new baza_operacje();
                     $dane = $baza->wszystkie_osoby();

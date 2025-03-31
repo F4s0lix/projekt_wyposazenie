@@ -11,17 +11,19 @@ class baza_operacje
     
     private function otworz_polaczenie()
     {
+        #otwiera połączenie z bazą danych
         $this->db = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
     }
 
     private function zamknij_polaczenie()
     {
+        #zamyka połączenie z bazą danych
         $this->db->close();
     }
 
     public function ostatnie_dodania()
     {
-        #funkcja zwraca listę z słownikami zawierającymi dane osatnich 7 dodanych rzeczy
+        #funkcja zwraca listę z słownikami zawierającymi dane osatnich 6 dodanych rzeczy
         $this->otworz_polaczenie();
         $query = 'SELECT id, nazwa, ilosc, faktura_id, miejsce, stan, srodek_trwaly FROM rzecz ORDER BY id DESC LIMIT 6';
         $result = $this->db->query($query);
@@ -46,6 +48,7 @@ class baza_operacje
     }
     public function ostatnie_wypozyczenia()
     {
+        #funkcja zwraca listę z słownikami zawierającymi dane osatnich 6 wypożyczeń
         $this->otworz_polaczenie();
         $query = 'SELECT wypozyczenia.email, rzecz.nazwa, wypozyczenia.data_zwrotu FROM wypozyczenia, rzecz WHERE rzecz.id = wypozyczenia.id_rzeczy ORDER BY wypozyczenia.data_wypozyczenia ASC LIMIT 6';
         $result = $this->db->query($query);
@@ -66,6 +69,7 @@ class baza_operacje
     }
     public function przemiot($id)
     {
+        #funkcja zwraca słownik z danymi przedmiotu o danym ID
         $nazwa = '';
         $ilosc = '';
         $faktura = '';
@@ -92,6 +96,7 @@ class baza_operacje
     }
 
     public function wyswielt_fakture($id){
+        #funkcja wyświetla fakturę o danym ID
         $nazwa = '';
         $typ = '';
         $blob = '';
@@ -115,6 +120,7 @@ class baza_operacje
         }
     }
     public function dodaj_fakture($faktura){
+        #funkcja dodaje fakturę do bazy danych i zwraca ID faktury
         if($faktura['name'] === '') return null;
         else{ 
             $fakturaNazwa = time().'_'.$faktura['name'];
@@ -133,6 +139,7 @@ class baza_operacje
     }
     public function dodaj_przedmiot($nazwa, $ilosc, $miejsce, $stan, $srodek, $faktura)
     {
+        #funkcja dodaje przedmiot do bazy danych i zwraca true lub błąd dodawania
         $this->otworz_polaczenie();
         $faktura_id = $this->dodaj_fakture($faktura);
 
@@ -148,6 +155,7 @@ class baza_operacje
         }
     }
     public function nazwa_faktury($id){
+        #funkcja zwraca nazwę faktury o danym ID
         $this->otworz_polaczenie();
         $nazwa = '';
         $stmt = $this->db->prepare('SELECT nazwa FROM faktury WHERE id = ?');
@@ -161,6 +169,7 @@ class baza_operacje
     }
     public function zmien_fakture($id_przedmiotu, $faktura)
     {
+        #funkcja zmienia zawartość faktury o podanym ID
         $this->otworz_polaczenie();
         $faktura_id = '';
         $stmt = $this->db->prepare('SELECT faktura_id FROM rzecz WHERE id = ?');
@@ -194,6 +203,7 @@ class baza_operacje
     }
     public function edytuj_przedmiot($id, $ilosc, $miejsce, $stan, $srodek, $faktura)
     {
+        #funkcja edytuje przedmiot o danym ID
         $this->otworz_polaczenie();
         $stmt = $this->db->prepare('UPDATE rzecz SET ilosc = ?, miejsce = ?, stan = ?, srodek_trwaly = ? WHERE id = ?');
         $stmt->bind_param('issii', $ilosc, $miejsce, $stan, $srodek, $id);
@@ -204,6 +214,7 @@ class baza_operacje
     }
     public function wyszukaj($tabela, $qn, $qt, $qm=null, $qs=null)
     {
+        #funkcja wyszukuje przedmioty lub osoby w bazie danych
         $this->otworz_polaczenie();
         if($tabela == 'rzecz'){
             $data = $this->wyszukaj_rzecz($qn, $qm, $qs, $qt);
@@ -215,6 +226,7 @@ class baza_operacje
     }
     public function wyszukaj_rzecz($qn, $qm, $qs, $qt)
     {
+        #funkcja wyszukuje przedmioty w bazie danych
         $id = '';
         $nazwa = '';
         $faktura = '';
@@ -244,6 +256,7 @@ class baza_operacje
     }
     public function wyszukaj_osobe($qn, $qt)
     {
+        #funkcja wyszukuje osoby w bazie danych
         $email = '';
         $numer = '';
         $stmt = $this->db->prepare('SELECT email, numer FROM osoby WHERE email LIKE ? AND numer LIKE ?');
@@ -262,6 +275,7 @@ class baza_operacje
         return $data;
     }
     public function wszystkie_osoby(){
+        #funkcja zwraca listę z słownikami zawierającymi dane wszystkich osób
         $this->otworz_polaczenie();
         $email = '';
         $numer = '';
@@ -281,6 +295,7 @@ class baza_operacje
     }
     public function wypozyczone($email)
     {
+        #funkcja zwraca listę z słownikami zawierającymi dane wypożyczonych przedmiotów przez daną osobę
         $id = '';
         $nazwa = '';
         $wypozyczenie = '';
@@ -306,6 +321,7 @@ class baza_operacje
     }
     public function dodaj_osobe($email, $numer)
     {
+        ##funkcja dodaje osobę do bazy danych i zwraca czy dodano
         $this->otworz_polaczenie();
         if($numer == '') $numer = null; 
         $stmt = $this->db->prepare('INSERT INTO osoby (email, numer) VALUES (?, ?)');
@@ -343,6 +359,7 @@ class baza_operacje
     }
     public function wypozycz($id_rzeczy, $email, $data_zwrotu)
     {
+        #funkcja dodaje wypożyczenie do bazy danych
         $this->otworz_polaczenie();
         $id_rzeczy = htmlspecialchars($id_rzeczy);
         $email = htmlspecialchars($email);
@@ -355,6 +372,7 @@ class baza_operacje
     }
     public function usun_wypozyczenie($email, $id, $dw, $dz)
     {
+        #funkcja usuwa wypożyczenie z bazy danych
         $this->otworz_polaczenie();
         $id_rzeczy = htmlspecialchars($id);
         $email = htmlspecialchars($email);

@@ -1,6 +1,7 @@
 <?php
     if(isset($_POST['co_wyszukac']))
     {
+        #import klasy i dostanie odpowiednich danych
         require_once '../operations/database.php';
         $db = new baza_operacje();
         $data = [];
@@ -40,6 +41,7 @@
     <main>
         <div class="wyniki">
             <?php
+                #wyświetla wynik wyszukiwania
                 if($_POST['co_wyszukac'] == 'rzecz')
                 {
                     echo '<table>';

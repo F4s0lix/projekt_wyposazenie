@@ -29,6 +29,7 @@
             <input type="submit" value="dalej" class="zniknij">
         </form>
             <?php
+                #zależnie od tego czego szuka wyświetla odpowiedni formularz
                 if(isset($_GET['co_wyszukac']))
                 {
                     echo '<style>.zniknij{display:none;}</style>';

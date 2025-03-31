@@ -5,7 +5,9 @@ FUNKCJONALNOŚCI:
 	- edycja rzeczy
 	- wypożyczanie rzeczy
 	- wyszukiwanie rzeczy
+	- wyszukiwanie osób
+	- usuwanie wypożyczeń
 	- wyszukiwanie wypożyczeń
-	- inwentaryzacja
+	- przechowywanie faktur
 	- dodanie nowej osoby
 	- usunięcie osoby

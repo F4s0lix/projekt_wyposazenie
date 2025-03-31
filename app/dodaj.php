@@ -1,13 +1,14 @@
 <?php
     function pokaz_wiadomosc($wiadomosc, $error)
     {
-        #funkcja wyświetla wiadomość o błędzie
+        #funkcja wyświetla wiadomość o błędzie/sukcesie operacji
         $klasa = $error?'error':'success';
         echo '<div class="'.$klasa.'" id="wiadomosc">'.$wiadomosc.'</div>';
         echo '';
     }
     if (isset($_POST['nazwa'], $_POST['ilosc'], $_POST['miejsce'], $_POST['stan'], $_FILES['faktura']))
     {
+        #blok dodaje przedmiot zapewniając ochronę przed XSS i pokazując ewentualne błędy
         $nazwa = htmlspecialchars($_POST['nazwa']);
         $ilosc = htmlspecialchars($_POST['ilosc']);
         $miejsce = htmlspecialchars($_POST['miejsce']);

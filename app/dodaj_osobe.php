@@ -1,12 +1,13 @@
 <?php
     function pokaz_wiadomosc($wiadomosc, $error)
     {
-        #funkcja wyświetla wiadomość o błędzie
+        #funkcja wyświetla wiadomość o błędzie/sukcesie operacji
         $klasa = $error?'error':'success';
         echo '<div class="'.$klasa.'" id="wiadomosc">'.$wiadomosc.'</div>';
         echo '';
     }
     if(isset($_POST['email'], $_POST['numer']))
+    #blok dodaje osobę do bazy zabezpieczając przed XSS
     {
         $email = htmlspecialchars($_POST['email']);
         $numer = htmlspecialchars($_POST['numer']);
@@ -54,5 +55,12 @@
     <footer>
         Stworzono przez: <a href="mailto:jan.wawrzyniak@zhp.pl">Jan Wawrzyniak</a>
     </footer>
+    <script>
+        //usuwa po 5 sekundach wiadomość
+        setInterval(function(){
+            var wiadomosc = document.getElementById('wiadomosc');
+            if(wiadomosc) wiadomosc.remove();
+        }, 5000);
+    </script>
 </body>
 </html>

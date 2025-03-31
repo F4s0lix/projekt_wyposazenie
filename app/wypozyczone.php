@@ -1,9 +1,12 @@
 <?php
+#jeżeli nie ma emaila przenosimy na stronę główną
 if(!isset($_GET['email'])) header('Location: ../index.php');
+#import klasy z pliku zewnętrznego
 require_once '../operations/database.php';
 $baza = new baza_operacje();
 if(isset($_GET['email'], $_GET['id'], $_GET['dw'], $_GET['dz'])) 
 {
+    #usuwa podane wypożyczenie
     $baza->usun_wypozyczenie($_GET['email'], $_GET['id'], $_GET['dw'], $_GET['dz']);
 }
 ?>
@@ -34,7 +37,8 @@ if(isset($_GET['email'], $_GET['id'], $_GET['dw'], $_GET['dz']))
             <table>
                 <tr><th>nazwa</th><th>data wypożyczenia</th><th>data zwrotu</th><th></th></tr>
                 <?php
-                $email = $_GET['email'];
+                    #wyświetla wszystkie wypożyczenia osoby w kolejnych wierszach tabeli
+                    $email = $_GET['email'];
                     $dane = $baza->wypozyczone($email);
                     foreach($dane as $k => $v) {
                         $id = $v['id'];
