@@ -322,6 +322,7 @@ class baza_operacje
     public function dodaj_osobe($email, $numer)
     {
         ##funkcja dodaje osobę do bazy danych i zwraca czy dodano
+        if(filter_var($email, FILTER_VALIDATE_EMAIL) === false) return false;
         $this->otworz_polaczenie();
         if($numer == '') $numer = null; 
         $stmt = $this->db->prepare('INSERT INTO osoby (email, numer) VALUES (?, ?)');
